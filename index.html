@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@getSupabase()/getSupabase()-js@2/dist/umd/getSupabase().js"></script>
 <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
 <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
 <script crossorigin src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -2023,23 +2023,40 @@ const RULES = [
 ];
 
 // =====================================================================
-// ⚙️  CONFIGURAÇÃO — EDITE AQUI ANTES DE PUBLICAR
+// ⚙️  CONFIGURAÇÃO
 // =====================================================================
 
-// 1) PRAZO LIMITE pra preencher palpites (após isso tudo trava)
 const DEADLINE = new Date('2026-06-10T23:59:59-03:00').getTime();
-
-// 2) SENHA DO ADMIN — MUDE PARA UMA SENHA SEGURA!
 const ADMIN_PASSWORD = 'pceXvYDHCYk7aKG';
-
-// 3) CREDENCIAIS DO SUPABASE — USE ESTAS:
-const SUPABASE_URL = 'https://atrobbmjmtzulvqcwqch.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_nizIpYNNpt4OtK1vKRFFWw_ch4fjiqP';
+const getSupabase()_URL = 'https://atrobbmjmtzulvqcwqch.getSupabase().co';
+const getSupabase()_KEY = 'sb_publishable_nizIpYNNpt4OtK1vKRFFWw_ch4fjiqP';
 
 // =====================================================================
-// CRIAÇÃO DO CLIENTE (CORRIGIDO)
+// CRIAÇÃO DO CLIENTE getSupabase() (CORRIGIDO)
 // =====================================================================
-const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+let getSupabase()Client = null;
+
+// Aguarda o carregamento do getSupabase()
+function getgetSupabase()Client() {
+  if (getSupabase()Client) return getSupabase()Client;
+  
+  // Tenta pegar do window (carregado via CDN)
+  if (typeof window !== 'undefined' && window.getSupabase()) {
+    getSupabase()Client = window.getSupabase().createClient(getSupabase()_URL, getSupabase()_KEY);
+    return getSupabase()Client;
+  }
+  
+  // Fallback: tenta pegar do escopo global
+  if (typeof getSupabase() !== 'undefined' && getSupabase().createClient) {
+    getSupabase()Client = getSupabase().createClient(getSupabase()_URL, getSupabase()_KEY);
+    return getSupabase()Client;
+  }
+  
+  throw new Error('getSupabase() não carregado. Verifique a ordem dos scripts.');
+}
+
+// Usa a função em todo o código
+const getgetSupabase() = () => getgetSupabase()Client();
 
 const SESSION_KEY = 'bolao_fifa_2026_session';
 
@@ -2049,7 +2066,7 @@ const defaultResults = () => ({
 });
 const defaultStore = () => ({ users: {}, results: defaultResults(), currentUser: null });
 
-// Converte linha do supabase -> formato interno do app
+// Converte linha do getSupabase() -> formato interno do app
 const userFromRow = (row) => ({
   username: row.username,
   name: row.name,
@@ -2074,11 +2091,11 @@ const resultsFromRow = (row) => ({
 });
 
 // Carrega tudo de uma vez
-async function loadAllFromSupabase() {
+async function loadAllFromgetSupabase()() {
   try {
     const [{ data: users, error: e1 }, { data: results, error: e2 }] = await Promise.all([
-      supabase.from('bolao_users').select('*'),
-      supabase.from('bolao_results').select('*').eq('id', 1).maybeSingle(),
+      getgetSupabase()().from('bolao_users').select('*'),
+      getgetSupabase()().from('bolao_results').select('*').eq('id', 1).maybeSingle(),
     ]);
     if (e1) console.error('Erro ao carregar usuários:', e1);
     if (e2) console.error('Erro ao carregar resultados:', e2);
@@ -2091,7 +2108,7 @@ async function loadAllFromSupabase() {
       currentUser: localStorage.getItem(SESSION_KEY) || null,
     };
   } catch (err) {
-    console.error('Erro Supabase:', err);
+    console.error('Erro getSupabase():', err);
     return defaultStore();
   }
 }
@@ -2108,13 +2125,13 @@ async function upsertUser(user) {
     knockout: user.knockout || {},
     updated_at: new Date().toISOString(),
   };
-  const { error } = await supabase.from('bolao_users').upsert(row, { onConflict: 'username' });
+  const { error } = await getgetSupabase()().from('bolao_users').upsert(row, { onConflict: 'username' });
   if (error) console.error('Erro ao salvar usuário:', error);
   return !error;
 }
 
 async function deleteUserDb(username) {
-  const { error } = await supabase.from('bolao_users').delete().eq('username', username);
+  const { error } = await getSupabase().from('bolao_users').delete().eq('username', username);
   if (error) console.error('Erro ao deletar usuário:', error);
   return !error;
 }
@@ -2131,7 +2148,7 @@ async function updateResultsDb(results) {
     top_scorer: results.topScorer || '',
     updated_at: new Date().toISOString(),
   };
-  const { error } = await supabase.from('bolao_results').upsert(row, { onConflict: 'id' });
+  const { error } = await getgetSupabase()().from('bolao_results').upsert(row, { onConflict: 'id' });
   if (error) console.error('Erro ao salvar resultados:', error);
   return !error;
 }
@@ -2611,7 +2628,7 @@ function App() {
   useEffect(() => {
     let mounted = true;
     (async () => {
-      const data = await loadAllFromSupabase();
+      const data = await loadAllFromgetSupabase()();
       if (mounted) {
         setStore(data);
         setLoading(false);
@@ -2619,17 +2636,17 @@ function App() {
     })();
 
     // Subscriptions em tempo real — qualquer mudança no banco reflete na tela
-    const channel = supabase
+    const channel = getgetSupabase()()
       .channel('bolao_changes')
       .on('postgres_changes', { event: '*', schema: 'public', table: 'bolao_users' }, async () => {
-        const { data } = await supabase.from('bolao_users').select('*');
+        const { data } = await getgetSupabase()().from('bolao_users').select('*');
         if (!mounted) return;
         const usersMap = {};
         (data || []).forEach(u => { usersMap[u.username] = userFromRow(u); });
         setStore(prev => ({ ...prev, users: usersMap }));
       })
       .on('postgres_changes', { event: '*', schema: 'public', table: 'bolao_results' }, async () => {
-        const { data } = await supabase.from('bolao_results').select('*').eq('id', 1).maybeSingle();
+        const { data } = await getSupabase().from('bolao_results').select('*').eq('id', 1).maybeSingle();
         if (!mounted) return;
         setStore(prev => ({ ...prev, results: resultsFromRow(data) }));
       })
@@ -2637,7 +2654,7 @@ function App() {
 
     return () => {
       mounted = false;
-      supabase.removeChannel(channel);
+      getSupabase().removeChannel(channel);
     };
   }, []);
 
@@ -2696,7 +2713,7 @@ function App() {
     if (u === 'admin') { showToast('Usuário reservado', 'error'); return false; }
 
     // Buscar versão fresca direto do banco pra evitar duplicidade
-    const { data: existing } = await supabase.from('bolao_users').select('username').eq('username', u).maybeSingle();
+    const { data: existing } = await getSupabase().from('bolao_users').select('username').eq('username', u).maybeSingle();
     if (existing) { showToast('Esse nome de usuário já existe', 'error'); return false; }
 
     const newUser = {
@@ -4587,7 +4604,7 @@ function AdminPage({ store, updateOfficialResult, updateOfficialExtra, updateOff
           <div style={{ marginTop: 30, padding: 14, background: 'rgba(0,0,0,0.3)', borderRadius: 10, border: '1px solid var(--line)' }}>
             <h4 style={{ fontFamily: 'Bebas Neue', fontSize: 16, color: 'var(--gold)', marginBottom: 8 }}>☁️ DADOS SINCRONIZADOS</h4>
             <p style={{ fontSize: 12, color: 'var(--text-dim)', marginBottom: 10 }}>
-              Seus dados estão salvos com segurança no banco de dados online (Supabase). Todos os usuários e palpites ficam sincronizados em tempo real entre todos os dispositivos.
+              Seus dados estão salvos com segurança no banco de dados online (getSupabase()). Todos os usuários e palpites ficam sincronizados em tempo real entre todos os dispositivos.
             </p>
             <button className="btn-secondary" onClick={() => {
               const blob = new Blob([JSON.stringify(store, null, 2)], { type: 'application/json' });
