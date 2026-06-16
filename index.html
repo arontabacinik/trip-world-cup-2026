@@ -10,7 +10,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 
-<script src="https://cdn.jsdelivr.net/npm/@getSupabase()/getSupabase()-js@2/dist/umd/getSupabase().js"></script>
+<!-- ===== SCRIPTS NA ORDEM CORRETA ===== -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
 <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
 <script crossorigin src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -40,8 +41,7 @@
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
-  /* ===== FORÇA COR DOS INPUTS DE PLACAR EM TODOS OS CENÁRIOS ===== */
-  /* Funciona mesmo com dark mode forçado do sistema/navegador/iOS */
+  /* FORÇA COR DOS INPUTS DE PLACAR */
   input.score-input,
   input.ko-score-input,
   input.bk-edit-score,
@@ -65,7 +65,6 @@
     -webkit-text-fill-color: #f4d35e !important;
     background-color: rgba(0, 0, 0, 0.7) !important;
   }
-  /* Modo de alto contraste do Windows também */
   @media (forced-colors: active) {
     input.score-input,
     input.ko-score-input,
@@ -75,11 +74,9 @@
       forced-color-adjust: none !important;
     }
   }
-  /* Para todos os inputs de número do app, garantir cor clara */
   input[type="number"] {
     color-scheme: dark;
   }
-  /* ===== FIM regras forçadas ===== */
 
   html, body { background: var(--bg-0); color: var(--text); font-family: 'Manrope', sans-serif; min-height: 100vh; -webkit-font-smoothing: antialiased; }
   body {
@@ -90,7 +87,6 @@
     background-attachment: fixed;
   }
 
-  /* Grain overlay */
   body::before {
     content: '';
     position: fixed; inset: 0;
@@ -107,7 +103,6 @@
 
   .app { min-height: 100vh; }
 
-  /* === HEADER === */
   .header {
     position: sticky; top: 0; z-index: 100;
     backdrop-filter: blur(20px);
@@ -173,7 +168,6 @@
   .user-logout { font-size: 11px; color: var(--text-muted); padding: 0 4px; }
   .user-logout:hover { color: var(--red); }
 
-  /* === MAIN LAYOUT === */
   .main { max-width: 1400px; margin: 0 auto; padding: 32px 24px 80px; }
 
   .page-header { margin-bottom: 28px; }
@@ -188,7 +182,6 @@
   }
   .page-sub { color: var(--text-dim); margin-top: 8px; max-width: 600px; font-size: 14px; }
 
-  /* === LOGIN / WELCOME === */
   .welcome {
     min-height: 100vh;
     display: flex; align-items: center; justify-content: center;
@@ -321,7 +314,6 @@
   }
   .welcome-rules-row strong { color: var(--text); }
 
-  /* === COUNTDOWN === */
   .countdown {
     display: flex; justify-content: center; gap: 8px;
     margin: 20px 0;
@@ -346,7 +338,6 @@
     color: var(--text-muted); margin-top: 4px;
   }
 
-  /* === STATS CARDS === */
   .stats-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -378,7 +369,6 @@
   }
   .stat-meta { font-size: 11px; color: var(--text-dim); margin-top: 4px; }
 
-  /* === MATCH CARDS === */
   .group-section { margin-bottom: 36px; }
   .group-header {
     display: flex; align-items: center; gap: 12px;
@@ -478,7 +468,6 @@
     background: rgba(212,175,55,0.08) !important;
     border-color: rgba(212,175,55,0.4);
   }
-  /* Remover setinhas do spinner do input number */
   .score-input::-webkit-outer-spin-button,
   .score-input::-webkit-inner-spin-button {
     -webkit-appearance: none;
@@ -489,7 +478,6 @@
   }
   .score-sep { color: var(--text-muted); font-weight: 700; }
 
-  /* === STANDINGS TABLE === */
   .standings {
     background: linear-gradient(180deg, rgba(26,34,56,0.5), rgba(10,15,28,0.5));
     border: 1px solid var(--line);
@@ -521,7 +509,6 @@
   .standings-row.third { background: rgba(0,240,255,0.04); }
   .standings-row .num { text-align: center; font-family: 'Space Mono', monospace; }
 
-  /* === BRACKET === */
   .bracket-wrap {
     overflow-x: auto;
     padding-bottom: 20px;
@@ -584,7 +571,6 @@
     color: var(--text-muted); text-align: center; margin-top: 4px;
   }
 
-  /* === RANKING === */
   .ranking-card {
     background: linear-gradient(180deg, rgba(26,34,56,0.6), rgba(10,15,28,0.6));
     border: 1px solid var(--line);
@@ -636,9 +622,6 @@
   .ranking-stat-value { font-family: 'Space Mono', monospace; font-weight: 700; }
   .ranking-stat-label { font-size: 9px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
 
-  /* === RULES SECTION (estilos abaixo, perto do final) === */
-
-  /* === KNOCKOUT BRACKET (Interactive) === */
   .ko-phases-nav {
     display: flex;
     gap: 4px;
@@ -687,7 +670,6 @@
     color: var(--green);
   }
 
-  /* Knockout match card - interactive */
   .ko-match {
     background: linear-gradient(180deg, rgba(26,34,56,0.6), rgba(10,15,28,0.7));
     border: 1px solid var(--line);
@@ -777,7 +759,6 @@
   .ko-score-input:disabled {
     opacity: 0.5;
   }
-  /* Remover setinhas de spinner do input number */
   .ko-score-input::-webkit-outer-spin-button,
   .ko-score-input::-webkit-inner-spin-button {
     -webkit-appearance: none;
@@ -897,7 +878,6 @@
   .ko-progress-text { flex: 1; color: var(--text-dim); }
   .ko-progress-text strong { color: var(--gold-bright); }
 
-  /* Trophy display for champion */
   .trophy-display {
     background: linear-gradient(180deg, rgba(212,175,55,0.15), rgba(212,175,55,0.05));
     border: 1px solid rgba(212,175,55,0.4);
@@ -947,7 +927,6 @@
     font-style: italic;
   }
 
-  /* Final showdown card */
   .final-showdown {
     background: linear-gradient(135deg, rgba(212,175,55,0.1), rgba(10,15,28,0.8));
     border: 2px solid var(--gold);
@@ -962,9 +941,6 @@
     .trophy-display .trophy-name { font-size: 32px; }
   }
 
-  .rules-grid-old { display: none; }
-
-  /* === BRACKET VISUAL (Champions League style) === */
   .bracket-toggle {
     display: inline-flex;
     background: rgba(0,0,0,0.3);
@@ -993,7 +969,6 @@
   }
   .bracket-toggle-btn:not(.active):hover { color: var(--text); }
 
-  /* Container do bracket */
   .bracket-canvas {
     background:
       radial-gradient(ellipse 60% 40% at 50% 50%, rgba(212,175,55,0.04), transparent 70%),
@@ -1055,7 +1030,6 @@
     font-weight: 600;
   }
 
-  /* Card de jogo no bracket */
   .bk-match {
     background: linear-gradient(180deg, rgba(26,34,56,0.7), rgba(10,15,28,0.85));
     border: 1px solid var(--line);
@@ -1159,54 +1133,6 @@
     text-transform: uppercase;
   }
 
-  /* Linhas conectoras entre jogos do bracket */
-  .bk-connector {
-    position: absolute;
-    pointer-events: none;
-  }
-  .bk-connector-h {
-    height: 1px;
-    background: linear-gradient(90deg, rgba(212,175,55,0.5), rgba(212,175,55,0.2));
-  }
-  .bk-connector-v {
-    width: 1px;
-    background: rgba(212,175,55,0.3);
-  }
-
-  /* Coluna especial: 3º lugar (centro) */
-  .bracket-3rd {
-    margin-top: 28px;
-    padding: 16px;
-    background: linear-gradient(180deg, rgba(205,127,50,0.05), rgba(10,15,28,0.5));
-    border: 1px dashed rgba(205,127,50,0.3);
-    border-radius: 14px;
-    max-width: 360px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  .bracket-3rd-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 14px;
-    letter-spacing: 3px;
-    text-align: center;
-    color: #cd7f32;
-    margin-bottom: 10px;
-  }
-
-  /* Final - coluna do meio destacada */
-  .bracket-col.final-col .bk-match {
-    background: linear-gradient(180deg, rgba(212,175,55,0.15), rgba(10,15,28,0.85));
-    border-color: var(--gold);
-    box-shadow: 0 0 24px rgba(212,175,55,0.15);
-    min-height: 100px;
-  }
-  .bracket-col.final-col .bracket-col-title {
-    color: var(--gold-bright);
-    font-size: 16px;
-    text-shadow: 0 0 12px rgba(212,175,55,0.4);
-  }
-
-  /* Modal de edição que aparece ao clicar em um jogo do bracket */
   .bk-edit-overlay {
     position: fixed; inset: 0;
     background: rgba(0,0,0,0.7);
@@ -1354,7 +1280,6 @@
     cursor: not-allowed;
   }
 
-  /* Mobile: bracket visual fica como horizontal scroll, modal full-screen */
   @media (max-width: 768px) {
     .bracket-tree {
       grid-template-columns: repeat(7, 160px);
@@ -1403,7 +1328,6 @@
     font-size: 12px;
   }
 
-  /* === EXTRA PICKS === */
   .extra-picks {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -1440,7 +1364,6 @@
   }
   .pick-input:focus { outline: none; border-color: var(--gold); }
 
-  /* === ADMIN === */
   .admin-warning {
     background: linear-gradient(90deg, rgba(255,77,109,0.1), rgba(255,159,67,0.1));
     border: 1px solid rgba(255,77,109,0.3);
@@ -1492,7 +1415,6 @@
   .badge.danger { background: rgba(255,77,109,0.15); color: var(--red); border: 1px solid rgba(255,77,109,0.3); }
   .badge.info { background: rgba(0,240,255,0.1); color: var(--neon); border: 1px solid rgba(0,240,255,0.3); }
 
-  /* === TOAST === */
   .toast {
     position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
     background: rgba(20,28,46,0.95);
@@ -1512,7 +1434,6 @@
     to { opacity: 1; transform: translate(-50%, 0); }
   }
 
-  /* === DEADLINE BANNER === */
   .deadline-banner {
     background: linear-gradient(90deg, rgba(212,175,55,0.1), rgba(244,211,94,0.1));
     border: 1px solid rgba(212,175,55,0.3);
@@ -1530,7 +1451,6 @@
   .deadline-title { font-weight: 700; font-size: 14px; }
   .deadline-sub { font-size: 12px; color: var(--text-dim); margin-top: 2px; }
 
-  /* === RESPONSIVE === */
   @media (max-width: 768px) {
     .header-inner { padding: 10px 14px; }
     .header-nav { display: none; }
@@ -1562,7 +1482,6 @@
     .stat-value { font-size: 30px; }
   }
 
-  /* Mobile bottom nav */
   .mobile-nav {
     display: none;
     position: fixed; bottom: 0; left: 0; right: 0;
@@ -1589,14 +1508,12 @@
     .main { padding-bottom: 100px; }
   }
 
-  /* Empty / loading states */
   .empty-state {
     text-align: center; padding: 60px 20px;
     color: var(--text-muted);
   }
   .empty-state .emoji { font-size: 48px; opacity: 0.5; margin-bottom: 12px; }
 
-  /* Progress bar */
   .progress {
     height: 6px;
     background: rgba(255,255,255,0.05);
@@ -1611,7 +1528,6 @@
     transition: width 0.3s ease;
   }
 
-  /* Section title */
   .section-title {
     font-family: 'Bebas Neue', sans-serif;
     font-size: 28px; letter-spacing: 1px;
@@ -1623,7 +1539,6 @@
     background: linear-gradient(90deg, var(--gold), transparent);
   }
 
-  /* Save indicator */
   .save-indicator {
     position: fixed; bottom: 24px; right: 24px;
     background: rgba(0,214,138,0.15);
@@ -1640,7 +1555,6 @@
     .save-indicator { bottom: 80px; right: 14px; }
   }
 
-  /* Lock indicator */
   .locked-msg {
     background: rgba(255,77,109,0.08);
     border: 1px solid rgba(255,77,109,0.3);
@@ -1651,7 +1565,6 @@
     color: var(--red);
   }
 
-  /* Tabs inside page */
   .tabs {
     display: flex; gap: 4px;
     margin-bottom: 20px;
@@ -1669,7 +1582,6 @@
   .tab.active { color: var(--gold-bright); border-bottom-color: var(--gold); }
   .tab:hover { color: var(--text); }
 
-  /* Inconsistency warning */
   .inconsistency {
     background: rgba(255,159,67,0.1);
     border: 1px solid rgba(255,159,67,0.4);
@@ -1687,7 +1599,7 @@
 
 <script type="text/babel" data-presets="env,react">
 // =================================================================
-//   BOLÃO FIFA 2026 — Sistema Completo (SEM PAGAMENTO PIX)
+//   BOLÃO FIFA 2026 — Sistema Completo (CORRIGIDO)
 // =================================================================
 
 const { useState, useEffect, useMemo, useCallback, useRef } = React;
@@ -1729,10 +1641,45 @@ const GROUPS = {
 const ALL_TEAMS = Object.values(GROUPS).flat();
 
 // =====================================================================
-// SINCRONIZAÇÃO AUTOMÁTICA COM A ESPN (gratuita, sem chave de API)
+// CONFIGURAÇÃO
 // =====================================================================
-// Mapeia o nome do time em PT-BR (usado nas FIXTURES) para os nomes
-// que a ESPN pode usar (em inglês ou variações).
+
+const DEADLINE = new Date('2026-06-10T23:59:59-03:00').getTime();
+const ADMIN_PASSWORD = 'pceXvYDHCYk7aKG';
+const SUPABASE_URL = 'https://atrobbmjmtzulvqcwqch.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_nizIpYNNpt4OtK1vKRFFWw_ch4fjiqP';
+
+// =====================================================================
+// CRIAÇÃO DO CLIENTE SUPABASE (CORRIGIDO - USANDO window.supabase)
+// =====================================================================
+let supabaseClient = null;
+
+function getSupabaseClient() {
+  if (supabaseClient) return supabaseClient;
+  
+  // Tenta pegar do window (carregado via CDN)
+  if (typeof window !== 'undefined' && window.supabase && window.supabase.createClient) {
+    supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    return supabaseClient;
+  }
+  
+  // Fallback: tenta pegar do escopo global
+  if (typeof supabase !== 'undefined' && supabase.createClient) {
+    supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    return supabaseClient;
+  }
+  
+  console.error('Supabase não encontrado! Verifique se o script foi carregado.');
+  return null;
+}
+
+// Função auxiliar para usar em todo o código
+const supabase = getSupabaseClient();
+
+// =====================================================================
+// SINCRONIZAÇÃO AUTOMÁTICA COM A ESPN
+// =====================================================================
+
 const ESPN_TEAM_ALIASES = {
   'México': ['Mexico'],
   'África do Sul': ['South Africa'],
@@ -1784,18 +1731,15 @@ const ESPN_TEAM_ALIASES = {
   'Panamá': ['Panama'],
 };
 
-// Remove acentos/caixa para comparar nomes com segurança
 const espnNorm = (s = '') =>
   s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z]/g, '');
 
-// Verifica se o nome retornado pela ESPN corresponde ao time da fixture (PT-BR)
 const espnTeamMatches = (fixtureTeamName, espnTeamName) => {
   const target = espnNorm(espnTeamName);
   const aliases = (ESPN_TEAM_ALIASES[fixtureTeamName] || [fixtureTeamName]).map(espnNorm);
   return aliases.includes(target);
 };
 
-// Busca o placar (scoreboard) público da ESPN para toda a janela da Copa
 async function fetchEspnScoreboard() {
   const url = 'https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates=20260611-20260719&limit=200';
   const res = await fetch(url);
@@ -1804,7 +1748,6 @@ async function fetchEspnScoreboard() {
   return data?.events || [];
 }
 
-// Acha o evento da ESPN que corresponde a uma fixture nossa (por nome dos dois times)
 function findEspnEvent(fix, events) {
   return events.find(ev => {
     const competitors = ev?.competitions?.[0]?.competitors || [];
@@ -1817,7 +1760,7 @@ function findEspnEvent(fix, events) {
   });
 }
 
-// 72 jogos da fase de grupos com datas e horários oficiais (horário de Brasília)
+// 72 jogos da fase de grupos
 const FIXTURES = [
   // GROUP A
   { id: 'A1', group: 'A', home: 'México', away: 'África do Sul', date: '2026-06-11T16:00', venue: 'Estádio Azteca' },
@@ -1905,38 +1848,26 @@ const FIXTURES = [
   { id: 'L6', group: 'L', home: 'Croácia', away: 'Gana', date: '2026-06-27T18:00', venue: 'Lincoln Financial Field' },
 ];
 
-// Knockout matches (Round of 32, R16, QF, SF, Final, 3rd place)
-// Round of 32 brackets - based on FIFA format
-// =====================================================================
-// MATA-MATA — Estrutura completa das fases (Oficial FIFA 2026)
-// =====================================================================
-// Cada fase tem 16/8/4/2/1 jogos. Os "slots" referenciam:
-//   - "1A", "2A" = 1º/2º colocado do grupo A
-//   - "3A/B/C/D/F" = melhor terceiro de um dos grupos listados
-//   - "W:R32-1" = vencedor do jogo R32-1 (avanço automático)
-
+// Knockout structure
 const KO_STRUCTURE = {
-  // 16 avos de final (32 times → 16) — Ordem oficial FIFA 2026 (chaveamento)
-  // Pares consecutivos (1-2, 3-4, 5-6, etc.) se enfrentam nas oitavas
   R32: [
-    { id: 'R32-1',  a: '1E', b: '3A/B/C/D/F', date: '2026-06-29T17:30' }, // FIFA M74 — Boston
-    { id: 'R32-2',  a: '1I', b: '3C/D/F/G/H', date: '2026-06-30T18:00' }, // FIFA M77 — NY/NJ
-    { id: 'R32-3',  a: '2A', b: '2B',          date: '2026-06-28T16:00' }, // FIFA M73 — LA
-    { id: 'R32-4',  a: '1F', b: '2C',          date: '2026-06-29T22:00' }, // FIFA M75 — Monterrey
-    { id: 'R32-5',  a: '2K', b: '2L',          date: '2026-07-02T20:00' }, // FIFA M83 — Toronto
-    { id: 'R32-6',  a: '1H', b: '2J',          date: '2026-07-02T16:00' }, // FIFA M84 — LA
-    { id: 'R32-7',  a: '1D', b: '3B/E/F/I/J', date: '2026-07-01T21:00' }, // FIFA M81 — SF Bay
-    { id: 'R32-8',  a: '1G', b: '3A/E/H/I/J', date: '2026-07-01T17:00' }, // FIFA M82 — Seattle
-    { id: 'R32-9',  a: '1C', b: '2F',          date: '2026-06-29T14:00' }, // FIFA M76 — Houston
-    { id: 'R32-10', a: '2E', b: '2I',          date: '2026-06-30T14:00' }, // FIFA M78 — Dallas
-    { id: 'R32-11', a: '1A', b: '3C/E/F/H/I', date: '2026-06-30T22:00' }, // FIFA M79 — CDMX
-    { id: 'R32-12', a: '1L', b: '3E/H/I/J/K', date: '2026-07-01T13:00' }, // FIFA M80 — Atlanta
-    { id: 'R32-13', a: '1J', b: '2H',          date: '2026-07-03T19:00' }, // FIFA M86 — Miami
-    { id: 'R32-14', a: '2D', b: '2G',          date: '2026-07-03T15:00' }, // FIFA M88 — Dallas
-    { id: 'R32-15', a: '1B', b: '3E/F/G/I/J', date: '2026-07-03T00:00' }, // FIFA M85 — Vancouver
-    { id: 'R32-16', a: '1K', b: '3D/E/I/J/L', date: '2026-07-03T22:30' }, // FIFA M87 — KC
+    { id: 'R32-1',  a: '1E', b: '3A/B/C/D/F', date: '2026-06-29T17:30' },
+    { id: 'R32-2',  a: '1I', b: '3C/D/F/G/H', date: '2026-06-30T18:00' },
+    { id: 'R32-3',  a: '2A', b: '2B',          date: '2026-06-28T16:00' },
+    { id: 'R32-4',  a: '1F', b: '2C',          date: '2026-06-29T22:00' },
+    { id: 'R32-5',  a: '2K', b: '2L',          date: '2026-07-02T20:00' },
+    { id: 'R32-6',  a: '1H', b: '2J',          date: '2026-07-02T16:00' },
+    { id: 'R32-7',  a: '1D', b: '3B/E/F/I/J', date: '2026-07-01T21:00' },
+    { id: 'R32-8',  a: '1G', b: '3A/E/H/I/J', date: '2026-07-01T17:00' },
+    { id: 'R32-9',  a: '1C', b: '2F',          date: '2026-06-29T14:00' },
+    { id: 'R32-10', a: '2E', b: '2I',          date: '2026-06-30T14:00' },
+    { id: 'R32-11', a: '1A', b: '3C/E/F/H/I', date: '2026-06-30T22:00' },
+    { id: 'R32-12', a: '1L', b: '3E/H/I/J/K', date: '2026-07-01T13:00' },
+    { id: 'R32-13', a: '1J', b: '2H',          date: '2026-07-03T19:00' },
+    { id: 'R32-14', a: '2D', b: '2G',          date: '2026-07-03T15:00' },
+    { id: 'R32-15', a: '1B', b: '3E/F/G/I/J', date: '2026-07-03T00:00' },
+    { id: 'R32-16', a: '1K', b: '3D/E/I/J/L', date: '2026-07-03T22:30' },
   ],
-  // Oitavas (16 → 8)
   R16: [
     { id: 'R16-1', a: 'W:R32-1',  b: 'W:R32-2',  date: '2026-07-04T16:00' },
     { id: 'R16-2', a: 'W:R32-3',  b: 'W:R32-4',  date: '2026-07-04T20:00' },
@@ -1947,23 +1878,19 @@ const KO_STRUCTURE = {
     { id: 'R16-7', a: 'W:R32-13', b: 'W:R32-14', date: '2026-07-07T16:00' },
     { id: 'R16-8', a: 'W:R32-15', b: 'W:R32-16', date: '2026-07-07T20:00' },
   ],
-  // Quartas (8 → 4)
   QF: [
     { id: 'QF-1', a: 'W:R16-1', b: 'W:R16-2', date: '2026-07-09T17:00' },
     { id: 'QF-2', a: 'W:R16-3', b: 'W:R16-4', date: '2026-07-09T21:00' },
     { id: 'QF-3', a: 'W:R16-5', b: 'W:R16-6', date: '2026-07-10T17:00' },
     { id: 'QF-4', a: 'W:R16-7', b: 'W:R16-8', date: '2026-07-11T17:00' },
   ],
-  // Semifinais (4 → 2)
   SF: [
     { id: 'SF-1', a: 'W:QF-1', b: 'W:QF-2', date: '2026-07-14T16:00' },
     { id: 'SF-2', a: 'W:QF-3', b: 'W:QF-4', date: '2026-07-15T16:00' },
   ],
-  // 3º lugar
   TP: [
     { id: 'TP-1', a: 'L:SF-1', b: 'L:SF-2', date: '2026-07-18T16:00' },
   ],
-  // Final
   F: [
     { id: 'F-1', a: 'W:SF-1', b: 'W:SF-2', date: '2026-07-19T16:00' },
   ],
@@ -1980,83 +1907,38 @@ const KO_PHASE_INFO = {
 
 const KO_PHASE_ORDER = ['R32', 'R16', 'QF', 'SF', 'TP', 'F'];
 
-// Mantém compatibilidade com código antigo
-const KO_R32 = KO_STRUCTURE.R32;
-
 const RULES = [
-  // Fase de grupos
   { label: 'Placar exato', pts: 5, cat: 'Fase de Grupos' },
   { label: 'Acertou vencedor/empate', pts: 2, cat: 'Fase de Grupos' },
   { label: 'Posição exata do time no grupo', pts: 3, cat: 'Fase de Grupos' },
-  // Mata-mata — base (acertar confronto)
   { label: '🎯 Confronto 16-avos', pts: 4, cat: 'Mata-mata: Confronto' },
   { label: '🎯 Confronto Oitavas', pts: 6, cat: 'Mata-mata: Confronto' },
   { label: '🎯 Confronto Quartas', pts: 8, cat: 'Mata-mata: Confronto' },
   { label: '🎯 Confronto Semifinal', pts: 10, cat: 'Mata-mata: Confronto' },
   { label: '🎯 Confronto 3º lugar', pts: 10, cat: 'Mata-mata: Confronto' },
   { label: '🎯 Confronto Final', pts: 14, cat: 'Mata-mata: Confronto' },
-  // Mata-mata — bônus de vencedor (90 min)
   { label: '+ Vencedor 16-avos', pts: 2, cat: 'Mata-mata: Bônus' },
   { label: '+ Vencedor Oitavas', pts: 2, cat: 'Mata-mata: Bônus' },
   { label: '+ Vencedor Quartas', pts: 3, cat: 'Mata-mata: Bônus' },
   { label: '+ Vencedor Semi', pts: 4, cat: 'Mata-mata: Bônus' },
   { label: '+ Vencedor 3º lugar', pts: 4, cat: 'Mata-mata: Bônus' },
   { label: '+ Vencedor Final', pts: 5, cat: 'Mata-mata: Bônus' },
-  // Mata-mata — bônus de placar exato
   { label: '+ Placar exato 16-avos', pts: 3, cat: 'Mata-mata: Placar Exato' },
   { label: '+ Placar exato Oitavas', pts: 4, cat: 'Mata-mata: Placar Exato' },
   { label: '+ Placar exato Quartas', pts: 5, cat: 'Mata-mata: Placar Exato' },
   { label: '+ Placar exato Semi', pts: 6, cat: 'Mata-mata: Placar Exato' },
   { label: '+ Placar exato 3º lugar', pts: 6, cat: 'Mata-mata: Placar Exato' },
   { label: '+ Placar exato Final', pts: 8, cat: 'Mata-mata: Placar Exato' },
-  // Bônus por sobrevivência (acertar times que chegam a cada fase, sem importar a chave)
   { label: '🎯 Time chegou às Oitavas', pts: 1, cat: 'Bônus por Sobrevivência' },
   { label: '🎯 Time chegou às Quartas', pts: 2, cat: 'Bônus por Sobrevivência' },
   { label: '🎯 Time chegou às Semis', pts: 3, cat: 'Bônus por Sobrevivência' },
   { label: '🎯 Time chegou à Final', pts: 5, cat: 'Bônus por Sobrevivência' },
-  // Bônus de classificação final
   { label: '🥇 Campeão', pts: 25, cat: 'Classificação Final' },
   { label: '🥈 Vice', pts: 18, cat: 'Classificação Final' },
   { label: '🥉 3º colocado', pts: 12, cat: 'Classificação Final' },
   { label: '4️⃣ 4º colocado', pts: 10, cat: 'Classificação Final' },
   { label: '⚽ Artilheiro', pts: 15, cat: 'Classificação Final' },
 ];
-
-// =====================================================================
-// ⚙️  CONFIGURAÇÃO
-// =====================================================================
-
-const DEADLINE = new Date('2026-06-10T23:59:59-03:00').getTime();
-const ADMIN_PASSWORD = 'pceXvYDHCYk7aKG';
-const getSupabase()_URL = 'https://atrobbmjmtzulvqcwqch.getSupabase().co';
-const getSupabase()_KEY = 'sb_publishable_nizIpYNNpt4OtK1vKRFFWw_ch4fjiqP';
-
-// =====================================================================
-// CRIAÇÃO DO CLIENTE getSupabase() (CORRIGIDO)
-// =====================================================================
-let getSupabase()Client = null;
-
-// Aguarda o carregamento do getSupabase()
-function getgetSupabase()Client() {
-  if (getSupabase()Client) return getSupabase()Client;
-  
-  // Tenta pegar do window (carregado via CDN)
-  if (typeof window !== 'undefined' && window.getSupabase()) {
-    getSupabase()Client = window.getSupabase().createClient(getSupabase()_URL, getSupabase()_KEY);
-    return getSupabase()Client;
-  }
-  
-  // Fallback: tenta pegar do escopo global
-  if (typeof getSupabase() !== 'undefined' && getSupabase().createClient) {
-    getSupabase()Client = getSupabase().createClient(getSupabase()_URL, getSupabase()_KEY);
-    return getSupabase()Client;
-  }
-  
-  throw new Error('getSupabase() não carregado. Verifique a ordem dos scripts.');
-}
-
-// Usa a função em todo o código
-const getgetSupabase() = () => getgetSupabase()Client();
 
 const SESSION_KEY = 'bolao_fifa_2026_session';
 
@@ -2066,7 +1948,6 @@ const defaultResults = () => ({
 });
 const defaultStore = () => ({ users: {}, results: defaultResults(), currentUser: null });
 
-// Converte linha do getSupabase() -> formato interno do app
 const userFromRow = (row) => ({
   username: row.username,
   name: row.name,
@@ -2090,12 +1971,20 @@ const resultsFromRow = (row) => ({
   topScorer: row?.top_scorer || '',
 });
 
-// Carrega tudo de uma vez
-async function loadAllFromgetSupabase()() {
+// =====================================================================
+// FUNÇÕES DE SUPABASE (CORRIGIDAS)
+// =====================================================================
+
+async function loadAllFromSupabase() {
   try {
+    if (!supabase) {
+      console.error('Supabase não disponível');
+      return defaultStore();
+    }
+    
     const [{ data: users, error: e1 }, { data: results, error: e2 }] = await Promise.all([
-      getgetSupabase()().from('bolao_users').select('*'),
-      getgetSupabase()().from('bolao_results').select('*').eq('id', 1).maybeSingle(),
+      supabase.from('bolao_users').select('*'),
+      supabase.from('bolao_results').select('*').eq('id', 1).maybeSingle(),
     ]);
     if (e1) console.error('Erro ao carregar usuários:', e1);
     if (e2) console.error('Erro ao carregar resultados:', e2);
@@ -2108,12 +1997,13 @@ async function loadAllFromgetSupabase()() {
       currentUser: localStorage.getItem(SESSION_KEY) || null,
     };
   } catch (err) {
-    console.error('Erro getSupabase():', err);
+    console.error('Erro Supabase:', err);
     return defaultStore();
   }
 }
 
 async function upsertUser(user) {
+  if (!supabase) return false;
   const row = {
     username: user.username,
     name: user.name,
@@ -2125,18 +2015,20 @@ async function upsertUser(user) {
     knockout: user.knockout || {},
     updated_at: new Date().toISOString(),
   };
-  const { error } = await getgetSupabase()().from('bolao_users').upsert(row, { onConflict: 'username' });
+  const { error } = await supabase.from('bolao_users').upsert(row, { onConflict: 'username' });
   if (error) console.error('Erro ao salvar usuário:', error);
   return !error;
 }
 
 async function deleteUserDb(username) {
-  const { error } = await getSupabase().from('bolao_users').delete().eq('username', username);
+  if (!supabase) return false;
+  const { error } = await supabase.from('bolao_users').delete().eq('username', username);
   if (error) console.error('Erro ao deletar usuário:', error);
   return !error;
 }
 
 async function updateResultsDb(results) {
+  if (!supabase) return false;
   const row = {
     id: 1,
     matches: results.matches || {},
@@ -2148,7 +2040,7 @@ async function updateResultsDb(results) {
     top_scorer: results.topScorer || '',
     updated_at: new Date().toISOString(),
   };
-  const { error } = await getgetSupabase()().from('bolao_results').upsert(row, { onConflict: 'id' });
+  const { error } = await supabase.from('bolao_results').upsert(row, { onConflict: 'id' });
   if (error) console.error('Erro ao salvar resultados:', error);
   return !error;
 }
@@ -2158,7 +2050,6 @@ async function updateResultsDb(results) {
 // =====================================================================
 
 function calcStandings(predictions, group) {
-  // From a user's match predictions, calculate group standings
   const teams = GROUPS[group];
   const table = teams.map(t => ({ team: t, p: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0, pts: 0 }));
   const groupFixtures = FIXTURES.filter(f => f.group === group);
@@ -2185,7 +2076,6 @@ function calcStandings(predictions, group) {
 }
 
 function getQualifiedTeams(predictions) {
-  // returns object: { firstPlaces: {A:..., B:...}, secondPlaces: {...}, thirdPlaces: [...] (sorted) }
   const firstPlaces = {}, secondPlaces = {}, thirdPlacesArr = [];
   Object.keys(GROUPS).forEach(g => {
     const t = calcStandings(predictions, g);
@@ -2193,16 +2083,10 @@ function getQualifiedTeams(predictions) {
     secondPlaces[g] = t[1]?.team || '';
     if (t[2]) thirdPlacesArr.push({ group: g, ...t[2] });
   });
-  // 8 best thirds by pts, gd, gf
   thirdPlacesArr.sort((x, y) => y.pts - x.pts || y.gd - x.gd || y.gf - x.gf);
   return { firstPlaces, secondPlaces, thirdPlaces: thirdPlacesArr.slice(0, 8) };
 }
 
-// =====================================================================
-// BRACKET RESOLUTION — descobre os times de cada confronto do mata-mata
-// =====================================================================
-
-// Determina o vencedor de um jogo do mata-mata baseado em placar + pênaltis (se empate)
 function getKnockoutWinner(matchData) {
   if (!matchData) return null;
   const a = parseInt(matchData.scoreA);
@@ -2210,30 +2094,23 @@ function getKnockoutWinner(matchData) {
   if (isNaN(a) || isNaN(b)) return null;
   if (a > b) return 'A';
   if (b > a) return 'B';
-  // Empate -> precisa de pênalti
   if (matchData.penaltyWinner === 'A' || matchData.penaltyWinner === 'B') {
     return matchData.penaltyWinner;
   }
   return null;
 }
 
-// Resolve nome do time a partir de um "slot" (ex: "1A", "2C", "W:R32-1", "3A/B/C/D/F")
 function resolveSlot(slot, qualified, knockout) {
   if (!slot) return null;
-  // "1A" = primeiro colocado do grupo A
   if (/^1[A-L]$/.test(slot)) return qualified.firstPlaces[slot[1]] || null;
-  // "2A" = segundo do A
   if (/^2[A-L]$/.test(slot)) return qualified.secondPlaces[slot[1]] || null;
-  // "3X/Y/Z..." = melhor terceiro entre os grupos listados (que ainda não foi alocado)
   if (slot.startsWith('3')) {
     const allowed = slot.substring(1).split('/');
-    // Pega o melhor terceiro elegível (já usado é registrado no escopo do resolveAllKnockout abaixo)
     for (const t of qualified.thirdPlaces) {
       if (allowed.includes(t.group)) return t.team;
     }
     return null;
   }
-  // "W:R32-1" = vencedor do jogo R32-1
   if (slot.startsWith('W:')) {
     const matchId = slot.slice(2);
     const data = knockout[matchId];
@@ -2242,7 +2119,6 @@ function resolveSlot(slot, qualified, knockout) {
     if (!w) return null;
     return w === 'A' ? data.teamA : data.teamB;
   }
-  // "L:SF-1" = perdedor da semi SF-1
   if (slot.startsWith('L:')) {
     const matchId = slot.slice(2);
     const data = knockout[matchId];
@@ -2254,36 +2130,24 @@ function resolveSlot(slot, qualified, knockout) {
   return null;
 }
 
-// Resolve TODOS os confrontos do mata-mata em sequência
-// Retorna: { R32: [{id, teamA, teamB, ...userData}], R16: [...], ... }
 function resolveAllKnockout(predictions, knockoutPicks) {
   const qualified = getQualifiedTeams(predictions);
   const knockout = { ...(knockoutPicks || {}) };
 
-  // ===== ATRIBUIÇÃO DOS MELHORES TERCEIROS AOS SLOTS R32 =====
-  // O FIFA tem uma tabela oficial complexa. Como cada slot R32 aceita terceiros
-  // de grupos específicos, precisamos encontrar uma atribuição que aloque
-  // TODOS os 8 terceiros classificados em slots válidos.
-  // Algoritmo: backtracking. Para cada slot, tenta cada terceiro elegível ainda não usado.
-
-  // 1) Coletar todos os slots R32 que aceitam um terceiro lugar e os grupos permitidos
   const thirdSlots = [];
   KO_STRUCTURE.R32.forEach((m, idx) => {
     if (m.a.startsWith('3')) thirdSlots.push({ matchIdx: idx, side: 'a', allowed: m.a.substring(1).split('/') });
     if (m.b.startsWith('3')) thirdSlots.push({ matchIdx: idx, side: 'b', allowed: m.b.substring(1).split('/') });
   });
 
-  // 2) Mapear cada terceiro pelo seu grupo
   const thirdsByGroup = {};
   qualified.thirdPlaces.forEach(t => { thirdsByGroup[t.group] = t.team; });
   const availableGroups = Object.keys(thirdsByGroup);
 
-  // 3) Backtracking: tenta achar uma atribuição completa
-  // Usa ordenação de slots por "menor número de opções primeiro" (heurística MRV)
   const slotOptionsCount = thirdSlots.map(s => s.allowed.filter(g => availableGroups.includes(g)).length);
   const slotOrder = thirdSlots.map((_, i) => i).sort((a, b) => slotOptionsCount[a] - slotOptionsCount[b]);
 
-  const assignment = {}; // matchIdx_side -> group
+  const assignment = {};
   function tryAssign(orderIdx, usedGroups) {
     if (orderIdx === slotOrder.length) return true;
     const slotIdx = slotOrder[orderIdx];
@@ -2300,12 +2164,10 @@ function resolveAllKnockout(predictions, knockoutPicks) {
     }
     return false;
   }
-  // Só roda o backtracking se houver pelo menos 8 terceiros disponíveis
   if (availableGroups.length >= 8) {
     tryAssign(0, new Set());
   }
 
-  // Função para resolver o slot do terceiro lugar usando a atribuição computada
   const getThirdForSlot = (matchIdx, side) => {
     const key = `${matchIdx}_${side}`;
     const group = assignment[key];
@@ -2329,7 +2191,6 @@ function resolveAllKnockout(predictions, knockoutPicks) {
       }
 
       const userData = knockout[m.id] || {};
-      // Atualiza o objeto knockout em memória pra próxima fase ler corretamente
       knockout[m.id] = {
         teamA: teamA || userData.teamA || null,
         teamB: teamB || userData.teamB || null,
@@ -2361,25 +2222,14 @@ function resolveAllKnockout(predictions, knockoutPicks) {
   return out;
 }
 
-// =====================================================================
-// BÔNUS POR SOBREVIVÊNCIA — pontos por acertar quem CHEGA em cada fase
-// (independente do confronto). Recompensa "feeling" mesmo errando a chave.
-// =====================================================================
 const SURVIVAL_POINTS = {
-  R16: 1,  // +1 pt por time que VOCÊ palpitou nas oitavas E ele chegou lá de fato
-  QF:  2,  // +2 pts por time nas quartas
-  SF:  3,  // +3 pts por time nas semifinais
-  F:   5,  // +5 pts por time na final
+  R16: 1,
+  QF:  2,
+  SF:  3,
+  F:   5,
 };
 
-// Retorna { R16: Set<times>, QF: Set<times>, SF: Set<times>, F: Set<times> }
-// = quais times chegaram a cada fase (ou seja, são os "teamA" e "teamB" da fase seguinte ou os vencedores da própria fase)
 function getSurvivorsByPhase(allKO) {
-  // Times que CHEGAM a uma fase = times participantes daquela fase
-  // Em R16: os 16 times que jogam as oitavas (vencedores de R32)
-  // Em QF:  os 8 times que jogam as quartas (vencedores de R16)
-  // Em SF:  os 4 times que jogam as semis (vencedores de QF)
-  // Em F:   os 2 times que jogam a final (vencedores de SF)
   const out = { R16: new Set(), QF: new Set(), SF: new Set(), F: new Set() };
   ['R16', 'QF', 'SF', 'F'].forEach(phase => {
     (allKO[phase] || []).forEach(m => {
@@ -2390,8 +2240,6 @@ function getSurvivorsByPhase(allKO) {
   return out;
 }
 
-// Calcula os pontos de bônus por sobrevivência do usuário
-// e retorna detalhamento (quantos times acertou em cada fase)
 function computeSurvivalBonus(userAllKO, realAllKO) {
   const userSurv = getSurvivorsByPhase(userAllKO);
   const realSurv = getSurvivorsByPhase(realAllKO);
@@ -2416,7 +2264,6 @@ function computeUserPoints(user, results) {
   let stats = { exact: 0, winner: 0, totalGames: 0, koMatches: 0 };
   if (!user || !user.predictions) return { points, stats };
 
-  // 1. Match results (fase de grupos)
   FIXTURES.forEach(fix => {
     const pred = user.predictions[fix.id];
     const real = results.matches[fix.id];
@@ -2434,7 +2281,6 @@ function computeUserPoints(user, results) {
     }
   });
 
-  // 2. Group standings (positions)
   if (results.standings) {
     const userStandings = {};
     Object.keys(GROUPS).forEach(g => {
@@ -2450,8 +2296,6 @@ function computeUserPoints(user, results) {
     });
   }
 
-  // 3. Knockout matches — acertou o confronto + bônus de placar/vencedor
-  // SÓ pontua se houver pelo menos algum dado real de mata-mata oficial registrado
   const hasOfficialKnockout = results.knockout && Object.keys(results.knockout).some(k => {
     const m = results.knockout[k];
     return m && (m.scoreA !== '' && m.scoreA !== undefined && m.scoreA !== null);
@@ -2477,30 +2321,23 @@ function computeUserPoints(user, results) {
         if (!um || !rm.teamA || !rm.teamB) return;
         if (!um.teamA || !um.teamB) return;
 
-        // 1) Acertou o CONFRONTO (par de times)?
         const realPair = new Set([rm.teamA, rm.teamB]);
         const userPair = new Set([um.teamA, um.teamB]);
         const matchedConfronto = userPair.size === 2 && [...realPair].every(t => userPair.has(t));
         if (!matchedConfronto) return;
 
-        // Pontuação base por acertar o confronto
         points += phasePts;
         stats.koMatches++;
 
-        // Só pontua bônus de placar se o jogo real já teve placar definido
         const realHasScore = rm.scoreA !== '' && rm.scoreA !== undefined && rm.scoreA !== null
                           && rm.scoreB !== '' && rm.scoreB !== undefined && rm.scoreB !== null;
         const userHasScore = um.scoreA !== '' && um.scoreA !== undefined && um.scoreA !== null
                           && um.scoreB !== '' && um.scoreB !== undefined && um.scoreB !== null;
         if (!realHasScore || !userHasScore) return;
 
-        // Para comparação correta, alinhar os placares ao lado dos times:
-        // Se o usuário pôs Brasil/França e o real foi França/Brasil, é o mesmo jogo,
-        // mas o "lado" muda. Precisamos normalizar.
         const rTeamA = rm.teamA, rTeamB = rm.teamB;
         const rScoreA = parseInt(rm.scoreA), rScoreB = parseInt(rm.scoreB);
 
-        // Descobre qual placar do user corresponde a qual time real
         let uScoreForRealA, uScoreForRealB;
         if (um.teamA === rTeamA && um.teamB === rTeamB) {
           uScoreForRealA = parseInt(um.scoreA);
@@ -2509,17 +2346,15 @@ function computeUserPoints(user, results) {
           uScoreForRealA = parseInt(um.scoreB);
           uScoreForRealB = parseInt(um.scoreA);
         } else {
-          return; // shouldn't happen, but safe
+          return;
         }
 
         if (isNaN(uScoreForRealA) || isNaN(uScoreForRealB) || isNaN(rScoreA) || isNaN(rScoreB)) return;
 
-        // 2) Placar exato?
         if (uScoreForRealA === rScoreA && uScoreForRealB === rScoreB) {
           points += exactBonus;
           stats.koExact++;
         } else {
-          // 3) Acertou pelo menos o resultado (vencedor ou empate)?
           const uResult = uScoreForRealA > uScoreForRealB ? 'A' : uScoreForRealA < uScoreForRealB ? 'B' : 'D';
           const rResult = rScoreA > rScoreB ? 'A' : rScoreA < rScoreB ? 'B' : 'D';
           if (uResult === rResult) {
@@ -2531,8 +2366,6 @@ function computeUserPoints(user, results) {
     });
   }
 
-  // 3.5 — BÔNUS POR SOBREVIVÊNCIA: pontos por times que você palpitou em cada fase
-  // independente da chave estar certa (só ativa se houver KO oficial lançado)
   if (hasOfficialKnockout) {
     const userAllKO = resolveAllKnockout(user.predictions, user.knockout || {});
     const realAllKO = resolveAllKnockout(
@@ -2545,7 +2378,6 @@ function computeUserPoints(user, results) {
     stats.survivalBreakdown = survBonus.breakdown;
   }
 
-  // 4. Final positions (só pontua se o admin já definiu o resultado oficial)
   const extras = user.extras || {};
   if (results.champion && extras.champion === results.champion) points += 25;
   if (results.vice && extras.vice === results.vice) points += 18;
@@ -2557,10 +2389,6 @@ function computeUserPoints(user, results) {
   return { points, stats };
 }
 
-// =====================================================================
-// UTILITIES
-// =====================================================================
-
 const fmtDateBR = (iso) => {
   const d = new Date(iso);
   const day = d.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' });
@@ -2570,12 +2398,8 @@ const fmtDateBR = (iso) => {
 };
 
 const isMatchLocked = (fixDate, globalDeadline = DEADLINE) => {
-  // Como o prazo geral (10/06) acontece ANTES do início da Copa (11/06),
-  // o bloqueio geral é suficiente — todos os jogos travam ao mesmo tempo.
   return Date.now() >= globalDeadline;
 };
-
-const slugify = (s) => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '_').replace(/(^_|_$)/g, '');
 
 const getInitials = (name) => name.trim().split(/\s+/).slice(0, 2).map(w => w[0]?.toUpperCase() || '').join('');
 
@@ -2624,38 +2448,40 @@ function App() {
   const [espnLastSync, setEspnLastSync] = useState(null);
   const saveTimeoutRef = useRef(null);
 
-  // Carregamento inicial + Realtime
   useEffect(() => {
     let mounted = true;
     (async () => {
-      const data = await loadAllFromgetSupabase()();
+      const data = await loadAllFromSupabase();
       if (mounted) {
         setStore(data);
         setLoading(false);
       }
     })();
 
-    // Subscriptions em tempo real — qualquer mudança no banco reflete na tela
-    const channel = getgetSupabase()()
-      .channel('bolao_changes')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'bolao_users' }, async () => {
-        const { data } = await getgetSupabase()().from('bolao_users').select('*');
-        if (!mounted) return;
-        const usersMap = {};
-        (data || []).forEach(u => { usersMap[u.username] = userFromRow(u); });
-        setStore(prev => ({ ...prev, users: usersMap }));
-      })
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'bolao_results' }, async () => {
-        const { data } = await getSupabase().from('bolao_results').select('*').eq('id', 1).maybeSingle();
-        if (!mounted) return;
-        setStore(prev => ({ ...prev, results: resultsFromRow(data) }));
-      })
-      .subscribe();
+    if (supabase) {
+      const channel = supabase
+        .channel('bolao_changes')
+        .on('postgres_changes', { event: '*', schema: 'public', table: 'bolao_users' }, async () => {
+          const { data } = await supabase.from('bolao_users').select('*');
+          if (!mounted) return;
+          const usersMap = {};
+          (data || []).forEach(u => { usersMap[u.username] = userFromRow(u); });
+          setStore(prev => ({ ...prev, users: usersMap }));
+        })
+        .on('postgres_changes', { event: '*', schema: 'public', table: 'bolao_results' }, async () => {
+          const { data } = await supabase.from('bolao_results').select('*').eq('id', 1).maybeSingle();
+          if (!mounted) return;
+          setStore(prev => ({ ...prev, results: resultsFromRow(data) }));
+        })
+        .subscribe();
 
-    return () => {
-      mounted = false;
-      getSupabase().removeChannel(channel);
-    };
+      return () => {
+        mounted = false;
+        supabase.removeChannel(channel);
+      };
+    }
+    
+    return () => { mounted = false; };
   }, []);
 
   const showToast = (msg, type = 'success') => {
@@ -2673,7 +2499,6 @@ function App() {
   const isLoggedIn = !!currentUser;
   const isAdmin = currentUser?.isAdmin === true;
 
-  // Login / Register
   const handleLogin = async (username, password) => {
     const u = username.trim().toLowerCase();
     if (u === 'admin' && password === ADMIN_PASSWORD) {
@@ -2712,9 +2537,10 @@ function App() {
     if (!u || !name || !password) { showToast('Preencha todos os campos', 'error'); return false; }
     if (u === 'admin') { showToast('Usuário reservado', 'error'); return false; }
 
-    // Buscar versão fresca direto do banco pra evitar duplicidade
-    const { data: existing } = await getSupabase().from('bolao_users').select('username').eq('username', u).maybeSingle();
-    if (existing) { showToast('Esse nome de usuário já existe', 'error'); return false; }
+    if (supabase) {
+      const { data: existing } = await supabase.from('bolao_users').select('username').eq('username', u).maybeSingle();
+      if (existing) { showToast('Esse nome de usuário já existe', 'error'); return false; }
+    }
 
     const newUser = {
       username: u, name: name.trim(), whatsapp: whatsapp.trim(),
@@ -2740,7 +2566,6 @@ function App() {
     setPage('palpites');
   };
 
-  // Update predictions for current user
   const updatePrediction = async (matchId, side, value) => {
     if (!currentUser) return;
     const fix = FIXTURES.find(f => f.id === matchId);
@@ -2754,11 +2579,8 @@ function App() {
     user.predictions[matchId] = { ...(user.predictions[matchId] || { home: '', away: '' }) };
     user.predictions[matchId][side] = value;
 
-    // Atualiza estado local imediatamente (UI responsiva)
     setStore(prev => ({ ...prev, users: { ...prev.users, [u]: user } }));
     triggerSaveIndicator();
-
-    // Salva no banco em background (debounced via Promise)
     await upsertUser(user);
   };
 
@@ -2775,7 +2597,6 @@ function App() {
     await upsertUser(user);
   };
 
-  // Atualiza palpite do mata-mata (placar ou pênalti) — campo: 'scoreA' | 'scoreB' | 'penaltyWinner'
   const updateKnockout = async (matchId, field, value) => {
     if (!currentUser) return;
     if (Date.now() >= DEADLINE && !isAdmin) {
@@ -2786,7 +2607,6 @@ function App() {
     const user = { ...store.users[u] };
     user.knockout = { ...(user.knockout || {}) };
     user.knockout[matchId] = { ...(user.knockout[matchId] || {}), [field]: value };
-    // Se ainda não houve empate, limpa o penaltyWinner
     if (field === 'scoreA' || field === 'scoreB') {
       const a = parseInt(field === 'scoreA' ? value : user.knockout[matchId].scoreA);
       const b = parseInt(field === 'scoreB' ? value : user.knockout[matchId].scoreB);
@@ -2799,7 +2619,6 @@ function App() {
     await upsertUser(user);
   };
 
-  // Admin actions
   const updateOfficialResult = async (matchId, side, value) => {
     const newResults = { ...store.results, matches: { ...store.results.matches } };
     newResults.matches[matchId] = { ...(newResults.matches[matchId] || { home: '', away: '' }) };
@@ -2809,7 +2628,6 @@ function App() {
     await updateResultsDb(newResults);
   };
 
-  // Sincroniza placares da fase de grupos automaticamente com a ESPN (grátis, sem API key)
   const syncWithEspn = async (silent = false) => {
     setEspnSyncing(true);
     try {
@@ -2825,7 +2643,7 @@ function App() {
         const comp = ev.competitions?.[0];
         const statusName = comp?.status?.type?.name || '';
         const isFinal = statusName === 'STATUS_FINAL' || !!comp?.status?.type?.completed;
-        if (statusName === 'STATUS_SCHEDULED' || statusName === '') return; // jogo ainda não começou
+        if (statusName === 'STATUS_SCHEDULED' || statusName === '') return;
 
         const competitors = comp?.competitors || [];
         const homeC = competitors.find(c => espnTeamMatches(fix.home, c?.team?.displayName || c?.team?.name || ''));
@@ -2863,11 +2681,9 @@ function App() {
     }
   };
 
-  // Auto-sync: enquanto o admin estiver com o painel aberto, busca novos placares
-  // da ESPN automaticamente a cada 3 minutos (sem custo, sem backend).
   useEffect(() => {
     if (!isAdmin || loading) return;
-    syncWithEspn(true); // já roda uma vez ao abrir
+    syncWithEspn(true);
     const interval = setInterval(() => syncWithEspn(true), 3 * 60 * 1000);
     return () => clearInterval(interval);
   }, [isAdmin, loading]);
@@ -2879,7 +2695,6 @@ function App() {
     await updateResultsDb(newResults);
   };
 
-  // Admin: atualizar resultado oficial de um jogo do mata-mata
   const updateOfficialKnockout = async (matchId, field, value) => {
     const newResults = { ...store.results };
     newResults.knockout = { ...(newResults.knockout || {}) };
@@ -2908,7 +2723,6 @@ function App() {
     showToast('Participante removido');
   };
 
-  // ----- RENDER -----
   if (loading) {
     return (
       <div className="welcome">
@@ -3118,7 +2932,6 @@ function PalpitesPage({ store, user, updatePrediction, updateExtra }) {
   const totalFilled = Object.values(user.predictions || {}).filter(p => p.home !== '' && p.away !== '').length;
   const progress = (totalFilled / FIXTURES.length) * 100;
 
-  // Todos os usuários têm acesso direto (sem verificação de pagamento)
   return (
     <div>
       <div className="page-header">
@@ -3194,7 +3007,7 @@ function PalpitesPage({ store, user, updatePrediction, updateExtra }) {
 }
 
 // =====================================================================
-// GROUP SECTION (fixtures + standings)
+// GROUP SECTION
 // =====================================================================
 function GroupSection({ group, predictions, updatePrediction, isAdmin }) {
   const fixtures = FIXTURES.filter(f => f.group === group);
@@ -3295,18 +3108,16 @@ function MatchCard({ fix, pred, update, isAdmin }) {
 }
 
 // =====================================================================
-// EXTRA PICKS (campeão, vice, etc.)
+// EXTRA PICKS
 // =====================================================================
 function ExtraPicks({ user, updateExtra }) {
   const e = user.extras || {};
   const deadlinePassed = Date.now() >= DEADLINE;
 
-  // Inconsistency check
   const champion = e.champion;
   const vice = e.vice;
   const third = e.third;
   const fourth = e.fourth;
-  const finalists = [champion, vice].filter(Boolean);
   const semis = [champion, vice, third, fourth].filter(Boolean);
   const hasDuplicate = new Set(semis).size !== semis.length;
 
@@ -3366,7 +3177,7 @@ function ExtraPicks({ user, updateExtra }) {
 }
 
 // =====================================================================
-// USER STANDINGS PROJECTION (mostra como ficariam os grupos)
+// USER STANDINGS
 // =====================================================================
 function UserStandings({ predictions }) {
   const qualified = useMemo(() => getQualifiedTeams(predictions), [predictions]);
@@ -3427,23 +3238,19 @@ function UserStandings({ predictions }) {
 }
 
 // =====================================================================
-// MATA-MATA PAGE — Bracket totalmente editável (todas as fases)
+// MATA-MATA PAGE
 // =====================================================================
 function MataMataPage({ store, user, updateKnockout }) {
   const [activePhase, setActivePhase] = useState('R32');
-  const [viewMode, setViewMode] = useState('visual'); // 'visual' | 'list'
+  const [viewMode, setViewMode] = useState('visual');
   const [editingMatchId, setEditingMatchId] = useState(null);
   const isAdmin = user.isAdmin;
 
-  // Resolve todos os confrontos do mata-mata a partir dos palpites do usuário
   const allKO = useMemo(
     () => resolveAllKnockout(user.predictions, user.knockout || {}),
     [user.predictions, user.knockout]
   );
 
-  const extras = user.extras || {};
-
-  // Estatísticas por fase
   const phaseStats = useMemo(() => {
     const out = {};
     KO_PHASE_ORDER.forEach(phase => {
@@ -3455,21 +3262,18 @@ function MataMataPage({ store, user, updateKnockout }) {
     return out;
   }, [allKO]);
 
-  // Calcula campeão e vice (a partir da final)
   const finalMatch = allKO.F?.[0];
   const champion = finalMatch?.winnerTeam || '';
   const vice = finalMatch && finalMatch.winnerTeam
     ? (finalMatch.winnerTeam === finalMatch.teamA ? finalMatch.teamB : finalMatch.teamA)
     : '';
 
-  // Calcula 3º e 4º (a partir do TP)
   const tpMatch = allKO.TP?.[0];
   const third = tpMatch?.winnerTeam || '';
   const fourth = tpMatch && tpMatch.winnerTeam
     ? (tpMatch.winnerTeam === tpMatch.teamA ? tpMatch.teamB : tpMatch.teamA)
     : '';
 
-  // Encontra match por ID em qualquer fase (para o modal)
   const findMatchById = (id) => {
     for (const phase of KO_PHASE_ORDER) {
       const m = (allKO[phase] || []).find(mm => mm.id === id);
@@ -3479,7 +3283,6 @@ function MataMataPage({ store, user, updateKnockout }) {
   };
   const editingMatch = editingMatchId ? findMatchById(editingMatchId) : null;
 
-  // Navegar para próximo/anterior jogo no modal
   const allMatchesFlat = useMemo(() => {
     const flat = [];
     KO_PHASE_ORDER.forEach(phase => {
@@ -3491,7 +3294,6 @@ function MataMataPage({ store, user, updateKnockout }) {
   const prevMatch = currentIdx > 0 ? allMatchesFlat[currentIdx - 1] : null;
   const nextMatch = currentIdx >= 0 && currentIdx < allMatchesFlat.length - 1 ? allMatchesFlat[currentIdx + 1] : null;
 
-  // Status geral: grupos preenchidos?
   const groupsComplete = FIXTURES.every(f => {
     const p = user.predictions?.[f.id];
     return p && p.home !== '' && p.away !== '';
@@ -3518,7 +3320,6 @@ function MataMataPage({ store, user, updateKnockout }) {
         </div>
       )}
 
-      {/* Toggle Visual/Lista */}
       <div className="bracket-toggle">
         <button
           className={`bracket-toggle-btn ${viewMode === 'visual' ? 'active' : ''}`}
@@ -3536,7 +3337,6 @@ function MataMataPage({ store, user, updateKnockout }) {
 
       {viewMode === 'visual' && (
         <>
-          {/* Trophy display */}
           <div className="trophy-display">
             <div className="trophy-label">Seu palpite</div>
             <div className="trophy-icon">🏆</div>
@@ -3553,13 +3353,9 @@ function MataMataPage({ store, user, updateKnockout }) {
             )}
           </div>
 
-          {/* Bracket visual completo */}
           <BracketVisual allKO={allKO} onMatchClick={setEditingMatchId} />
-
-          {/* Card: Times do meu palpite por fase (mostra quem o usuário acha que vai longe) */}
           <SurvivalPreviewCard allKO={allKO} store={store} />
 
-          {/* Resumo */}
           {(champion || vice || third || fourth) && (
             <>
               <div className="section-title">📊 Resumo dos Palpites</div>
@@ -3596,7 +3392,6 @@ function MataMataPage({ store, user, updateKnockout }) {
 
       {viewMode === 'list' && (
         <>
-          {/* Navegação entre fases */}
           <div className="ko-phases-nav">
             {KO_PHASE_ORDER.map(phase => {
               const info = KO_PHASE_INFO[phase];
@@ -3624,7 +3419,6 @@ function MataMataPage({ store, user, updateKnockout }) {
         </>
       )}
 
-      {/* Modal de edição */}
       {editingMatch && (
         <BracketEditModal
           match={editingMatch}
@@ -3640,12 +3434,9 @@ function MataMataPage({ store, user, updateKnockout }) {
 }
 
 // =====================================================================
-// BRACKET VISUAL — chaveamento estilo Champions League
+// BRACKET VISUAL
 // =====================================================================
 function BracketVisual({ allKO, onMatchClick }) {
-  // Layout: 7 colunas (R32 esq | R16 esq | QF esq | F | QF dir | R16 dir | R32 dir)
-  // Divide os 16 jogos de R32 em duas metades: 8 esquerda, 8 direita
-  // O bracket é cruzado: superior esquerdo -> R16-1, R16-1 vs R16-2 -> QF-1, QF-1 vs QF-2 -> SF-1
   const r32 = allKO.R32 || [];
   const r16 = allKO.R16 || [];
   const qf = allKO.QF || [];
@@ -3653,8 +3444,6 @@ function BracketVisual({ allKO, onMatchClick }) {
   const f = allKO.F || [];
   const tp = allKO.TP || [];
 
-  // Lado esquerdo: R32 1-8, R16 1-4, QF 1-2, SF 1
-  // Lado direito: R32 9-16, R16 5-8, QF 3-4, SF 2
   const leftR32 = r32.slice(0, 8);
   const rightR32 = r32.slice(8, 16);
   const leftR16 = r16.slice(0, 4);
@@ -3670,7 +3459,6 @@ function BracketVisual({ allKO, onMatchClick }) {
     <>
       <div className="bracket-canvas">
         <div className="bracket-tree">
-          {/* Coluna 1: R32 Esquerda */}
           <div className="bracket-col">
             <div className="bracket-col-title">
               16-AVOS
@@ -3679,7 +3467,6 @@ function BracketVisual({ allKO, onMatchClick }) {
             {leftR32.map(m => <BracketMatch key={m.id} match={m} onClick={onMatchClick} />)}
           </div>
 
-          {/* Coluna 2: R16 Esquerda */}
           <div className="bracket-col">
             <div className="bracket-col-title">
               OITAVAS
@@ -3688,7 +3475,6 @@ function BracketVisual({ allKO, onMatchClick }) {
             {leftR16.map(m => <BracketMatch key={m.id} match={m} onClick={onMatchClick} />)}
           </div>
 
-          {/* Coluna 3: QF Esquerda */}
           <div className="bracket-col">
             <div className="bracket-col-title">
               QUARTAS
@@ -3701,7 +3487,6 @@ function BracketVisual({ allKO, onMatchClick }) {
             </div>
           </div>
 
-          {/* Coluna 4: FINAL (centro) */}
           <div className="bracket-col final-col">
             <div className="bracket-col-title">
               FINAL 🏆
@@ -3714,7 +3499,6 @@ function BracketVisual({ allKO, onMatchClick }) {
             </div>
           </div>
 
-          {/* Coluna 5: QF Direita */}
           <div className="bracket-col">
             <div className="bracket-col-title">
               QUARTAS
@@ -3727,7 +3511,6 @@ function BracketVisual({ allKO, onMatchClick }) {
             </div>
           </div>
 
-          {/* Coluna 6: R16 Direita */}
           <div className="bracket-col">
             <div className="bracket-col-title">
               OITAVAS
@@ -3736,7 +3519,6 @@ function BracketVisual({ allKO, onMatchClick }) {
             {rightR16.map(m => <BracketMatch key={m.id} match={m} onClick={onMatchClick} />)}
           </div>
 
-          {/* Coluna 7: R32 Direita */}
           <div className="bracket-col">
             <div className="bracket-col-title">
               16-AVOS
@@ -3756,7 +3538,7 @@ function BracketVisual({ allKO, onMatchClick }) {
 }
 
 // =====================================================================
-// CARD DE JOGO DENTRO DO BRACKET VISUAL (clicável)
+// BRACKET MATCH
 // =====================================================================
 function BracketMatch({ match, onClick }) {
   const ready = match.teamA && match.teamB;
@@ -3800,7 +3582,7 @@ function BracketMatch({ match, onClick }) {
 }
 
 // =====================================================================
-// MODAL DE EDIÇÃO DE JOGO (abre ao clicar no bracket)
+// BRACKET EDIT MODAL
 // =====================================================================
 function BracketEditModal({ match, updateKnockout, isAdmin, onClose, onPrev, onNext }) {
   const dt = fmtDateBR(match.date);
@@ -3812,7 +3594,6 @@ function BracketEditModal({ match, updateKnockout, isAdmin, onClose, onPrev, onN
   const hasScores = !isNaN(a) && !isNaN(b);
   const isDraw = hasScores && a === b;
 
-  // Fecha modal com ESC
   useEffect(() => {
     const handler = (e) => {
       if (e.key === 'Escape') onClose();
@@ -3865,7 +3646,6 @@ function BracketEditModal({ match, updateKnockout, isAdmin, onClose, onPrev, onN
           </div>
         </div>
 
-        {/* Em caso de empate, escolher modo + vencedor */}
         {isDraw && (
           <div className="ko-penalty-section">
             <div className="ko-penalty-label">
@@ -3911,7 +3691,6 @@ function BracketEditModal({ match, updateKnockout, isAdmin, onClose, onPrev, onN
           </div>
         )}
 
-        {/* Tag do vencedor */}
         {match.winnerTeam && (
           <div style={{ textAlign: 'center', marginTop: 16 }}>
             <div className="ko-winner-tag">
@@ -3927,7 +3706,6 @@ function BracketEditModal({ match, updateKnockout, isAdmin, onClose, onPrev, onN
           </div>
         )}
 
-        {/* Navegação anterior/próximo */}
         <div className="bk-edit-nav">
           <button onClick={onPrev} disabled={!onPrev}>← Anterior</button>
           <button onClick={onClose}>Fechar</button>
@@ -3939,12 +3717,11 @@ function BracketEditModal({ match, updateKnockout, isAdmin, onClose, onPrev, onN
 }
 
 // =====================================================================
-// SURVIVAL PREVIEW — mostra quais times o usuário tem em cada fase
+// SURVIVAL PREVIEW
 // =====================================================================
 function SurvivalPreviewCard({ allKO, store }) {
   const userSurvivors = useMemo(() => getSurvivorsByPhase(allKO), [allKO]);
 
-  // Há resultados oficiais? Se sim, calcula quantos acertos.
   const realAllKO = useMemo(() => {
     if (!store?.results) return null;
     const hasOfficial = store.results.knockout && Object.keys(store.results.knockout).some(k => {
@@ -4052,7 +3829,7 @@ function SurvivalPreviewCard({ allKO, store }) {
 }
 
 // =====================================================================
-// SEÇÃO DE UMA FASE DO MATA-MATA
+// KO PHASE SECTION
 // =====================================================================
 function KoPhaseSection({ phase, matches, updateKnockout, isAdmin }) {
   const info = KO_PHASE_INFO[phase];
@@ -4088,7 +3865,7 @@ function KoPhaseSection({ phase, matches, updateKnockout, isAdmin }) {
 }
 
 // =====================================================================
-// CARTÃO DE UM JOGO DO MATA-MATA (editável)
+// KO MATCH CARD
 // =====================================================================
 function KoMatchCard({ match, updateKnockout, isAdmin }) {
   const dt = fmtDateBR(match.date);
@@ -4098,7 +3875,6 @@ function KoMatchCard({ match, updateKnockout, isAdmin }) {
   const a = parseInt(match.scoreA);
   const b = parseInt(match.scoreB);
   const isDraw = hasScores && !isNaN(a) && !isNaN(b) && a === b;
-  const needsPenalty = isDraw && !match.penaltyWinner;
   const isComplete = !!match.winnerTeam;
 
   return (
@@ -4152,7 +3928,6 @@ function KoMatchCard({ match, updateKnockout, isAdmin }) {
             />
           </div>
 
-          {/* Em caso de empate, seleção de modo + vencedor */}
           {isDraw && (
             <div className="ko-penalty-section">
               <div className="ko-penalty-label">
@@ -4198,7 +3973,6 @@ function KoMatchCard({ match, updateKnockout, isAdmin }) {
             </div>
           )}
 
-          {/* Tag do vencedor */}
           {match.winnerTeam && (
             <div className="ko-winner-tag">
               <span>✓ Avança:</span>
@@ -4222,13 +3996,11 @@ function KoMatchCard({ match, updateKnockout, isAdmin }) {
 // =====================================================================
 function RankingPage({ store }) {
   const ranking = useMemo(() => {
-    // Todos os usuários não-admin entram no ranking (sem verificação de pagamento)
     const participants = Object.values(store.users).filter(u => !u.isAdmin);
     const withPoints = participants.map(u => {
       const { points, stats } = computeUserPoints(u, store.results);
       return { ...u, points, stats };
     });
-    // Tie-breakers: exact > champion > matamata
     withPoints.sort((a, b) => {
       if (b.points !== a.points) return b.points - a.points;
       if (b.stats.exact !== a.stats.exact) return b.stats.exact - a.stats.exact;
@@ -4415,7 +4187,6 @@ function AdminPage({ store, updateOfficialResult, updateOfficialExtra, updateOff
 
   const participants = Object.values(store.users).filter(u => !u.isAdmin);
 
-  // Calcula standings oficiais a partir dos resultados oficiais
   const officialStandings = useMemo(() => {
     const std = {};
     Object.keys(GROUPS).forEach(g => {
@@ -4604,7 +4375,7 @@ function AdminPage({ store, updateOfficialResult, updateOfficialExtra, updateOff
           <div style={{ marginTop: 30, padding: 14, background: 'rgba(0,0,0,0.3)', borderRadius: 10, border: '1px solid var(--line)' }}>
             <h4 style={{ fontFamily: 'Bebas Neue', fontSize: 16, color: 'var(--gold)', marginBottom: 8 }}>☁️ DADOS SINCRONIZADOS</h4>
             <p style={{ fontSize: 12, color: 'var(--text-dim)', marginBottom: 10 }}>
-              Seus dados estão salvos com segurança no banco de dados online (getSupabase()). Todos os usuários e palpites ficam sincronizados em tempo real entre todos os dispositivos.
+              Seus dados estão salvos com segurança no banco de dados online (Supabase). Todos os usuários e palpites ficam sincronizados em tempo real entre todos os dispositivos.
             </p>
             <button className="btn-secondary" onClick={() => {
               const blob = new Blob([JSON.stringify(store, null, 2)], { type: 'application/json' });
@@ -4622,14 +4393,13 @@ function AdminPage({ store, updateOfficialResult, updateOfficialExtra, updateOff
 }
 
 // =====================================================================
-// ADMIN — Seção de Mata-Mata Oficial
+// ADMIN KNOCKOUT SECTION
 // =====================================================================
 function AdminKnockoutSection({ store, updateOfficialKnockout }) {
   const [activePhase, setActivePhase] = useState('R32');
   const [viewMode, setViewMode] = useState('visual');
   const [editingMatchId, setEditingMatchId] = useState(null);
 
-  // Resolve os confrontos OFICIAIS a partir dos resultados oficiais dos grupos + resultados oficiais do KO
   const allKO = useMemo(() => {
     return resolveAllKnockout(store.results.matches || {}, store.results.knockout || {});
   }, [store.results.matches, store.results.knockout]);
@@ -4740,7 +4510,6 @@ function AdminKnockoutSection({ store, updateOfficialKnockout }) {
 // =====================================================================
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(<App />);
-
 </script>
 </body>
 </html>
